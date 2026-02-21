@@ -14,62 +14,48 @@ export async function POST(request: NextRequest) {
 
     // API endpoint для создания товара в tablecrm.com
     // Используем базовый URL из предоставленной ссылки
-    const apiUrl = `https://app.tablecrm.com/api/nomenclature`
+    const apiUrl = `https://app.tablecrm.com/api/v1/nomenclature/`
     
-    // Формируем payload для API
+    // Формируем payload для API согласно документации
     const payload = {
       name: productData.name,
-      description: productData.description || "",
-      sku: productData.sku || "",
-      price: productData.price,
-      unit: productData.unit || "",
-      category: productData.category || "",
-      barcode: productData.barcode || "",
-      weight: productData.weight,
-      volume: productData.volume,
-      tax_rate: productData.tax_rate,
-      in_stock: productData.in_stock,
-      min_stock: productData.min_stock,
+      type: productData.type || "product",
+      description_short: productData.description_short || "",
+      description_long: productData.description_long || "",
+      code: productData.code || "",
+      unit: productData.unit ? parseInt(productData.unit) : 116,
+      category: productData.category ? parseInt(productData.category) : 2477,
+      cashback_type: productData.cashback_type || "lcard_cashback",
+      seo_title: productData.seo_title || "",
+      seo_description: productData.seo_description || "",
+      seo_keywords: productData.seo_keywords || [],
+      global_category_id: productData.global_category_id ? parseInt(productData.global_category_id) : 127,
+      marketplace_price: productData.marketplace_price ? parseFloat(productData.marketplace_price) : 0,
+      chatting_percent: productData.chatting_percent ? parseFloat(productData.chatting_percent) : 0,
+      address: productData.address || "",
+      latitude: productData.latitude ? parseFloat(productData.latitude) : null,
+      longitude: productData.longitude ? parseFloat(productData.longitude) : null,
     }
 
-    // Отправляем запрос к API tablecrm.com
-    const response = await fetch(apiUrl, {
+    // Отправляем запрос к API tablecrm.com с токеном в query параметрах
+    const response = await fetch(`${apiUrl}?token=${token}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-        // Альтернативный вариант, если используется токен в query параметрах
-        // "X-Auth-Token": token,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify([payload]), // API ожидает массив объектов
     })
 
     if (!response.ok) {
       const errorText = await response.text()
       console.error("API Error:", errorText)
-      
-      // Пробуем альтернативный вариант с токеном в query параметрах
-      const altResponse = await fetch(`${apiUrl}?token=${token}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      return NextResponse.json(
+        { 
+          message: "Ошибка при создании товара",
+          details: errorText 
         },
-        body: JSON.stringify(payload),
-      })
-
-      if (!altResponse.ok) {
-        const altErrorText = await altResponse.text()
-        return NextResponse.json(
-          { 
-            message: "Ошибка при создании товара",
-            details: altErrorText || errorText 
-          },
-          { status: altResponse.status }
-        )
-      }
-
-      const altResult = await altResponse.json()
-      return NextResponse.json(altResult)
+        { status: response.status }
+      )
     }
 
     const result = await response.json()
