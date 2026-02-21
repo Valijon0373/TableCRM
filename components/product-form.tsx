@@ -330,61 +330,62 @@ export function ProductForm() {
 
   return (
     <Card className="w-full max-w-6xl mx-auto">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div>
-            <CardTitle className="text-3xl">Создание карточки товара</CardTitle>
-            <CardDescription className="mt-2">
+      <CardHeader className="p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0">
+          <div className="flex-1">
+            <CardTitle className="text-xl sm:text-2xl md:text-3xl">Создание карточки товара</CardTitle>
+            <CardDescription className="mt-2 text-xs sm:text-sm">
               Заполните форму для создания новой карточки товара в системе tablecrm.com
             </CardDescription>
           </div>
-          <Badge variant="secondary" className="text-sm">
+          <Badge variant="secondary" className="text-xs sm:text-sm w-fit">
             <Sparkles className="w-3 h-3 mr-1" />
             AI помощник
           </Badge>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-4 sm:p-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 sm:space-y-6">
             <Tabs defaultValue="basic" className="w-full">
-              <TabsList className="grid w-full grid-cols-4">
-                <TabsTrigger value="basic">Основное</TabsTrigger>
-                <TabsTrigger value="description">Описание</TabsTrigger>
-                <TabsTrigger value="seo">SEO</TabsTrigger>
-                <TabsTrigger value="location">Местоположение</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 h-auto">
+                <TabsTrigger value="basic" className="text-xs sm:text-sm py-2 sm:py-1.5">Основное</TabsTrigger>
+                <TabsTrigger value="description" className="text-xs sm:text-sm py-2 sm:py-1.5">Описание</TabsTrigger>
+                <TabsTrigger value="seo" className="text-xs sm:text-sm py-2 sm:py-1.5">SEO</TabsTrigger>
+                <TabsTrigger value="location" className="text-xs sm:text-sm py-2 sm:py-1.5">Местоположение</TabsTrigger>
               </TabsList>
 
               {/* Вкладка: Основное */}
-              <TabsContent value="basic" className="space-y-6 mt-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <TabsContent value="basic" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <FormField
                     control={form.control}
                     name="name"
                     render={({ field }) => (
                       <FormItem className="md:col-span-2">
-                        <FormLabel className="flex items-center gap-2">
-                          Название товара *
+                        <FormLabel className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-2">
+                          <span>Название товара *</span>
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
                             onClick={handleGenerateFromName}
                             disabled={isGeneratingFields || !field.value || field.value.length < 2}
-                            className="h-6 px-2 text-xs"
+                            className="h-8 sm:h-6 px-2 sm:px-2 text-xs w-full sm:w-auto self-start sm:self-auto"
                           >
                             {isGeneratingFields ? (
-                              <Loader2 className="w-3 h-3 animate-spin" />
+                              <Loader2 className="w-3 h-3 animate-spin mr-1" />
                             ) : (
-                              <Wand2 className="w-3 h-3" />
+                              <Wand2 className="w-3 h-3 mr-1" />
                             )}
-                            Заполнить все поля
+                            <span className="hidden sm:inline">Заполнить все поля</span>
+                            <span className="sm:hidden">Автозаполнение</span>
                           </Button>
                         </FormLabel>
                         <FormControl>
-                          <Input placeholder="Введите название товара" {...field} />
+                          <Input placeholder="Введите название товара" {...field} className="text-sm sm:text-base" />
                         </FormControl>
-                        <FormDescription>
+                        <FormDescription className="text-xs sm:text-sm">
                           Обязательное поле. Минимум 2 символа. Нажмите кнопку для автоматического заполнения всех полей.
                         </FormDescription>
                         <FormMessage />
@@ -397,9 +398,9 @@ export function ProductForm() {
                     name="code"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Код товара (Артикул)</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Код товара (Артикул)</FormLabel>
                         <FormControl>
-                          <Input placeholder="Автоматически сгенерируется" {...field} />
+                          <Input placeholder="Автоматически сгенерируется" {...field} className="text-sm sm:text-base" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -411,7 +412,7 @@ export function ProductForm() {
                     name="type"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Тип товара</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Тип товара</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
@@ -433,7 +434,7 @@ export function ProductForm() {
                     name="unit"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Единица измерения</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Единица измерения</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
@@ -463,26 +464,26 @@ export function ProductForm() {
                     name="category"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="flex items-center gap-2">
-                          Категория
+                        <FormLabel className="flex flex-col sm:flex-row sm:items-center gap-2">
+                          <span>Категория</span>
                           <Button
                             type="button"
                             variant="ghost"
                             size="sm"
                             onClick={handleSuggestCategory}
                             disabled={isSuggestingCategory || !form.getValues("name") || form.getValues("name")!.length < 2}
-                            className="h-6 px-2 text-xs"
+                            className="h-8 sm:h-6 px-2 text-xs w-full sm:w-auto self-start sm:self-auto"
                           >
                             {isSuggestingCategory ? (
-                              <Loader2 className="w-3 h-3 animate-spin" />
+                              <Loader2 className="w-3 h-3 animate-spin mr-1" />
                             ) : (
-                              <Search className="w-3 h-3" />
+                              <Search className="w-3 h-3 mr-1" />
                             )}
                             Найти
                           </Button>
                         </FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="ID категории" {...field} />
+                          <Input type="number" placeholder="ID категории" {...field} className="text-sm sm:text-base" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -494,9 +495,9 @@ export function ProductForm() {
                     name="global_category_id"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Глобальная категория ID</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Глобальная категория ID</FormLabel>
                         <FormControl>
-                          <Input type="number" placeholder="127" {...field} />
+                          <Input type="number" placeholder="127" {...field} className="text-sm sm:text-base" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -508,9 +509,9 @@ export function ProductForm() {
                     name="marketplace_price"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Цена на маркетплейсе</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Цена на маркетплейсе</FormLabel>
                         <FormControl>
-                          <Input type="number" step="0.01" placeholder="0.00" {...field} />
+                          <Input type="number" step="0.01" placeholder="0.00" {...field} className="text-sm sm:text-base" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -522,9 +523,9 @@ export function ProductForm() {
                     name="chatting_percent"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Процент чата (%)</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Процент чата (%)</FormLabel>
                         <FormControl>
-                          <Input type="number" step="0.01" placeholder="0.00" {...field} />
+                          <Input type="number" step="0.01" placeholder="0.00" {...field} className="text-sm sm:text-base" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -536,7 +537,7 @@ export function ProductForm() {
                     name="cashback_type"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Тип кешбэка</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Тип кешбэка</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger>
@@ -556,27 +557,29 @@ export function ProductForm() {
               </TabsContent>
 
               {/* Вкладка: Описание */}
-              <TabsContent value="description" className="space-y-6 mt-6">
+              <TabsContent value="description" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
                 <FormField
                   control={form.control}
                   name="description_short"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2">
-                        <FileText className="w-4 h-4" />
-                        Краткое описание
+                      <FormLabel className="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <div className="flex items-center gap-2">
+                          <FileText className="w-4 h-4" />
+                          <span>Краткое описание</span>
+                        </div>
                         <Button
                           type="button"
                           variant="ghost"
                           size="sm"
                           onClick={() => handleFormatText("description_short")}
                           disabled={isFormattingText || !field.value || field.value.length < 2}
-                          className="h-6 px-2 text-xs ml-auto"
+                          className="h-8 sm:h-6 px-2 text-xs w-full sm:w-auto sm:ml-auto self-start sm:self-auto"
                         >
                           {isFormattingText ? (
-                            <Loader2 className="w-3 h-3 animate-spin" />
+                            <Loader2 className="w-3 h-3 animate-spin mr-1" />
                           ) : (
-                            <Wand2 className="w-3 h-3" />
+                            <Wand2 className="w-3 h-3 mr-1" />
                           )}
                           Форматировать
                         </Button>
@@ -584,12 +587,12 @@ export function ProductForm() {
                       <FormControl>
                         <Textarea
                           placeholder="Введите краткое описание товара"
-                          className="resize-none"
+                          className="resize-none text-sm sm:text-base"
                           rows={3}
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="text-xs sm:text-sm">
                         Краткое описание товара для карточек и списков
                       </FormDescription>
                       <FormMessage />
@@ -602,21 +605,23 @@ export function ProductForm() {
                   name="description_long"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="flex items-center gap-2">
-                        <FileText className="w-4 h-4" />
-                        Полное описание
+                      <FormLabel className="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <div className="flex items-center gap-2">
+                          <FileText className="w-4 h-4" />
+                          <span>Полное описание</span>
+                        </div>
                         <Button
                           type="button"
                           variant="ghost"
                           size="sm"
                           onClick={() => handleFormatText("description_long")}
                           disabled={isFormattingText || !field.value || field.value.length < 2}
-                          className="h-6 px-2 text-xs ml-auto"
+                          className="h-8 sm:h-6 px-2 text-xs w-full sm:w-auto sm:ml-auto self-start sm:self-auto"
                         >
                           {isFormattingText ? (
-                            <Loader2 className="w-3 h-3 animate-spin" />
+                            <Loader2 className="w-3 h-3 animate-spin mr-1" />
                           ) : (
-                            <Wand2 className="w-3 h-3" />
+                            <Wand2 className="w-3 h-3 mr-1" />
                           )}
                           Форматировать
                         </Button>
@@ -624,12 +629,12 @@ export function ProductForm() {
                       <FormControl>
                         <Textarea
                           placeholder="Введите полное описание товара"
-                          className="resize-none"
-                          rows={8}
+                          className="resize-none text-sm sm:text-base"
+                          rows={6}
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="text-xs sm:text-sm">
                         Подробное описание товара с характеристиками и преимуществами
                       </FormDescription>
                       <FormMessage />
@@ -639,11 +644,11 @@ export function ProductForm() {
               </TabsContent>
 
               {/* Вкладка: SEO */}
-              <TabsContent value="seo" className="space-y-6 mt-6">
-                <div className="flex items-center justify-between mb-4">
+              <TabsContent value="seo" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 mb-4">
                   <div>
-                    <h3 className="text-lg font-semibold">SEO параметры</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="text-base sm:text-lg font-semibold">SEO параметры</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       Настройте SEO параметры для лучшей индексации в поисковых системах
                     </p>
                   </div>
@@ -652,16 +657,19 @@ export function ProductForm() {
                     variant="outline"
                     onClick={handleGenerateSEO}
                     disabled={isGeneratingSEO || !form.getValues("name") || form.getValues("name")!.length < 2}
+                    className="w-full sm:w-auto text-sm"
                   >
                     {isGeneratingSEO ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Генерация...
+                        <span className="hidden sm:inline">Генерация...</span>
+                        <span className="sm:hidden">Генерация</span>
                       </>
                     ) : (
                       <>
                         <Sparkles className="w-4 h-4 mr-2" />
-                        Сгенерировать SEO
+                        <span className="hidden sm:inline">Сгенерировать SEO</span>
+                        <span className="sm:hidden">SEO</span>
                       </>
                     )}
                   </Button>
@@ -672,11 +680,11 @@ export function ProductForm() {
                   name="seo_title"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>SEO заголовок</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">SEO заголовок</FormLabel>
                       <FormControl>
-                        <Input placeholder="SEO название товара" {...field} />
+                        <Input placeholder="SEO название товара" {...field} className="text-sm sm:text-base" />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="text-xs sm:text-sm">
                         Заголовок для поисковых систем (рекомендуется 50-60 символов)
                       </FormDescription>
                       <FormMessage />
@@ -689,16 +697,16 @@ export function ProductForm() {
                   name="seo_description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>SEO описание</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">SEO описание</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="SEO описание товара"
-                          className="resize-none"
+                          className="resize-none text-sm sm:text-base"
                           rows={3}
                           {...field}
                         />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="text-xs sm:text-sm">
                         Описание для поисковых систем (рекомендуется 150-160 символов)
                       </FormDescription>
                       <FormMessage />
@@ -711,11 +719,11 @@ export function ProductForm() {
                   name="seo_keywords"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>SEO ключевые слова</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">SEO ключевые слова</FormLabel>
                       <FormControl>
-                        <Input placeholder="ключевое слово 1, ключевое слово 2, ..." {...field} />
+                        <Input placeholder="ключевое слово 1, ключевое слово 2, ..." {...field} className="text-sm sm:text-base" />
                       </FormControl>
-                      <FormDescription>
+                      <FormDescription className="text-xs sm:text-sm">
                         Введите ключевые слова через запятую
                       </FormDescription>
                       <FormMessage />
@@ -725,12 +733,12 @@ export function ProductForm() {
               </TabsContent>
 
               {/* Вкладка: Местоположение */}
-              <TabsContent value="location" className="space-y-6 mt-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <MapPin className="w-5 h-5" />
+              <TabsContent value="location" className="space-y-4 sm:space-y-6 mt-4 sm:mt-6">
+                <div className="flex items-start sm:items-center gap-2 mb-4">
+                  <MapPin className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" />
                   <div>
-                    <h3 className="text-lg font-semibold">Местоположение</h3>
-                    <p className="text-sm text-muted-foreground">
+                    <h3 className="text-base sm:text-lg font-semibold">Местоположение</h3>
+                    <p className="text-xs sm:text-sm text-muted-foreground">
                       Укажите адрес и координаты для товара
                     </p>
                   </div>
@@ -741,11 +749,11 @@ export function ProductForm() {
                   name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Адрес</FormLabel>
+                      <FormLabel className="text-sm sm:text-base">Адрес</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="улица Зайцева 8, Ново-Татарская слобода, Казань, TT, Россия, 420108"
-                          className="resize-none"
+                          className="resize-none text-sm sm:text-base"
                           rows={2}
                           {...field}
                         />
@@ -755,15 +763,15 @@ export function ProductForm() {
                   )}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <FormField
                     control={form.control}
                     name="latitude"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Широта</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Широта</FormLabel>
                         <FormControl>
-                          <Input type="number" step="0.0000001" placeholder="55.7711953" {...field} />
+                          <Input type="number" step="0.0000001" placeholder="55.7711953" {...field} className="text-sm sm:text-base" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -775,9 +783,9 @@ export function ProductForm() {
                     name="longitude"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Долгота</FormLabel>
+                        <FormLabel className="text-sm sm:text-base">Долгота</FormLabel>
                         <FormControl>
-                          <Input type="number" step="0.0000001" placeholder="49.10211794999999" {...field} />
+                          <Input type="number" step="0.0000001" placeholder="49.10211794999999" {...field} className="text-sm sm:text-base" />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -787,23 +795,28 @@ export function ProductForm() {
               </TabsContent>
             </Tabs>
 
-            <div className="flex justify-end gap-4 pt-6 border-t">
+                <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-4 sm:pt-6 border-t">
               <Button
                 type="button"
                 variant="outline"
                 onClick={() => form.reset()}
                 disabled={isSubmitting}
+                className="w-full sm:w-auto order-2 sm:order-1"
               >
                 Очистить
               </Button>
-              <Button type="submit" disabled={isSubmitting}>
+              <Button type="submit" disabled={isSubmitting} className="w-full sm:w-auto order-1 sm:order-2">
                 {isSubmitting ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Создание...
+                    <span className="hidden sm:inline">Создание...</span>
+                    <span className="sm:hidden">Создание</span>
                   </>
                 ) : (
-                  "Создать карточку товара"
+                  <>
+                    <span className="hidden sm:inline">Создать карточку товара</span>
+                    <span className="sm:hidden">Создать</span>
+                  </>
                 )}
               </Button>
             </div>
